@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAITTA — Oakland, CA</title>
+  <meta name="description" content="Official site of Gaitta — Oakland rap artist. Stream music, watch videos, and catch upcoming shows." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:    #C9A84C;
+      --gold-lt: #E8C96A;
+      --black:   #060606;
+      --dark:    #111111;
+      --card:    #161616;
+      --border:  #252525;
+      --text:    #FFFFFF;
+      --muted:   #888888;
+      --font-head: 'Bebas Neue', sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --radius:  8px;
+      --transition: .3s cubic-bezier(.4,0,.2,1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── Scrollbar ────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    /* ─── Utility ──────────────────────────────────────────── */
+    .gold    { color: var(--gold); }
+    .tag     { display: inline-block; font-size: .65rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: .25em .75em; border-radius: 2px; }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 1;
+      letter-spacing: .03em;
+    }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
+    .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.5rem 0; }
+
+    /* ─── Nav ──────────────────────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    #nav.scrolled {
+      background: rgba(6,6,6,.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 1.75rem;
+      letter-spacing: .12em;
+      color: var(--text);
+      transition: color var(--transition);
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--black) !important;
+      padding: .55rem 1.4rem;
+      border-radius: 2px;
+      font-weight: 700 !important;
+      letter-spacing: .08em;
+      transition: background var(--transition) !important;
+    }
+    .nav-cta:hover { background: var(--gold-lt) !important; color: var(--black) !important; }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: .4rem;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      width: 24px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* mobile nav */
+    .mobile-nav {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(6,6,6,.97);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: var(--font-head);
+      font-size: 2.5rem;
+      letter-spacing: .1em;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      font-size: 2rem; cursor: pointer;
+      background: none; border: none; color: var(--text);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, #nav .nav-cta { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ─── Hero ─────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1208 100%);
+      z-index: 0;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,.08) 0%, transparent 65%);
+    }
+    .hero-left {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 8rem clamp(1.5rem, 4vw, 4rem) 4rem clamp(1.5rem, 4vw, 3rem);
+    }
+    .hero-eyebrow {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--gold);
+    }
+    .hero-name {
+      font-family: var(--font-head);
+      font-size: clamp(5rem, 14vw, 11rem);
+      line-height: .9;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .hero-name span { color: var(--gold); }
+    .hero-location {
+      margin-top: 1.5rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-desc {
+      margin-top: 2rem;
+      max-width: 420px;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #aaaaaa;
+      font-weight: 300;
+    }
+    .hero-actions {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--gold);
+      color: var(--black);
+      font-weight: 700;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .9rem 2rem;
+      border-radius: 2px;
+      border: none; cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-primary:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .9rem 2rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition), transform var(--transition);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .hero-stats {
+      margin-top: 4rem;
+      display: flex;
+      gap: 3rem;
+    }
+    .stat-num {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: .3rem;
+    }
+    .hero-right {
+      position: relative; z-index: 1;
+      overflow: hidden;
+    }
+    .hero-img-main {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: brightness(.85);
+    }
+    .hero-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--black) 0%, transparent 30%, transparent 70%, var(--black) 100%),
+                  linear-gradient(to bottom, transparent 60%, var(--black) 100%);
+    }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      z-index: 5;
+      display: flex; flex-direction: column; align-items: center; gap: .6rem;
+      font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: .4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(.7); }
+    }
+
+    @media (max-width: 768px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right {
+        position: absolute; inset: 0; z-index: 0;
+        opacity: .25;
+      }
+      .hero-left {
+        z-index: 2; min-height: 100svh;
+        padding-top: 6rem;
+      }
+      .hero-name { font-size: clamp(4.5rem, 22vw, 6rem); }
+    }
+
+    /* ─── Section shells ───────────────────────────────────── */
+    .section { padding: clamp(4rem, 10vw, 8rem) 0; }
+    .section-label {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    /* ─── About ────────────────────────────────────────────── */
+    #about { background: var(--dark); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: var(--radius);
+      filter: brightness(.9);
+    }
+    .about-img-badge {
+      position: absolute;
+      bottom: -1.5rem; right: -1.5rem;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-head);
+      font-size: 1rem;
+      letter-spacing: .1em;
+      padding: 1.2rem 1.5rem;
+      border-radius: var(--radius);
+      text-align: center;
+      line-height: 1.2;
+    }
+    .about-img-badge strong { display: block; font-size: 2.2rem; line-height: 1; }
+    .about-text .section-title { margin: .75rem 0 1.5rem; }
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: #aaa;
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-img-badge { right: 1rem; }
+    }
+
+    /* ─── Music ────────────────────────────────────────────── */
+    #music { background: var(--black); }
+    .music-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+    .apple-link {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: .6rem 1.4rem;
+      border-radius: 2px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .apple-link:hover { background: var(--gold); color: var(--black); }
+    .apple-link svg { width: 14px; height: 14px; }
+
+    .music-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .track-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    }
+    .track-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,168,76,.4);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .track-art-wrap {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+    .track-art {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease, filter .5s ease;
+    }
+    .track-card:hover .track-art { transform: scale(1.04); filter: brightness(.7); }
+    .track-art-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: opacity var(--transition);
+      background: rgba(0,0,0,.3);
+    }
+    .track-card:hover .track-art-overlay { opacity: 1; }
+    .play-btn {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform var(--transition), background var(--transition);
+    }
+    .play-btn:hover { transform: scale(1.1); background: var(--gold-lt); }
+    .play-btn svg { fill: var(--black); width: 20px; height: 20px; margin-left: 3px; }
+    .play-btn.playing svg.icon-play { display: none; }
+    .play-btn.playing svg.icon-pause { display: block; }
+    .play-btn svg.icon-pause { display: none; margin-left: 0; }
+    .track-explicit {
+      position: absolute; top: .75rem; left: .75rem;
+      background: rgba(0,0,0,.7);
+      font-size: .55rem; font-weight: 700; letter-spacing: .1em;
+      color: var(--muted); padding: .2em .5em; border-radius: 2px;
+    }
+    .track-info { padding: 1.1rem 1.25rem 1.25rem; }
+    .track-name {
+      font-weight: 600;
+      font-size: .95rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: .3rem;
+    }
+    .track-meta {
+      font-size: .7rem;
+      color: var(--muted);
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .track-year { color: var(--gold); font-weight: 600; }
+    .track-audio {
+      width: 100%;
+      appearance: none;
+      height: 2px;
+      background: var(--border);
+      border-radius: 1px;
+      outline: none;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      accent-color: var(--gold);
+      display: none;
+    }
+    .track-audio.visible { display: block; }
+    .track-progress {
+      width: 100%;
+      height: 2px;
+      background: var(--border);
+      border-radius: 1px;
+      margin-bottom: 1rem;
+      display: none;
+      overflow: hidden;
+    }
+    .track-progress.visible { display: block; }
+    .track-progress-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 1px;
+      width: 0%;
+      transition: width .25s linear;
+    }
+    .track-actions {
+      display: flex; gap: .6rem;
+    }
+    .track-btn {
+      flex: 1;
+      display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .55rem .75rem;
+      border-radius: 2px;
+      border: none; cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .track-btn-preview {
+      background: rgba(201,168,76,.12);
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,.3);
+    }
+    .track-btn-preview:hover { background: rgba(201,168,76,.22); }
+    .track-btn-buy {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .track-btn-buy:hover { background: var(--gold-lt); }
+
+    /* Loading state */
+    .music-loading {
+      display: flex; align-items: center; justify-content: center;
+      padding: 4rem;
+      color: var(--muted);
+      font-size: .85rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      gap: 1rem;
+    }
+    .loading-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: loadBounce 1.2s ease-in-out infinite;
+    }
+    .loading-dot:nth-child(2) { animation-delay: .2s; }
+    .loading-dot:nth-child(3) { animation-delay: .4s; }
+    @keyframes loadBounce {
+      0%, 80%, 100% { transform: scale(.6); opacity: .4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ─── Gallery ──────────────────────────────────────────── */
+    #gallery { background: var(--dark); padding-bottom: 0; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 3.5rem;
+    }
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease, filter .6s ease;
+      filter: brightness(.75) saturate(.9);
+    }
+    .gallery-item:hover img { transform: scale(1.06); filter: brightness(.55) saturate(1); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item { aspect-ratio: 1; }
+    }
+
+    /* ─── Videos ───────────────────────────────────────────── */
+    #videos { background: var(--black); }
+    .videos-header { margin-bottom: 3.5rem; }
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .video-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+    .video-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,168,76,.4);
+    }
+    .video-embed {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      background: #0a0a0a;
+    }
+    .video-embed iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .video-embed-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, #111 0%, #1a1208 100%);
+      cursor: pointer;
+    }
+    .video-embed-placeholder .yt-icon {
+      width: 60px; height: 60px;
+    }
+    .video-embed-placeholder p {
+      font-size: .7rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .video-info { padding: 1.1rem 1.25rem 1.25rem; }
+    .video-title {
+      font-weight: 600; font-size: .9rem; margin-bottom: .35rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .video-sub { font-size: .7rem; color: var(--muted); }
+    .video-yt-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      margin-top: .85rem;
+      font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: #ff0000;
+      border: 1px solid rgba(255,0,0,.3);
+      padding: .45rem 1rem; border-radius: 2px;
+      transition: background var(--transition);
+    }
+    .video-yt-btn:hover { background: rgba(255,0,0,.1); }
+
+    /* ─── Events ───────────────────────────────────────────── */
+    #events {
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+    #events::before {
+      content: 'LIVE';
+      position: absolute;
+      right: -2rem; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-head);
+      font-size: clamp(8rem, 20vw, 18rem);
+      color: rgba(201,168,76,.04);
+      pointer-events: none;
+      line-height: 1;
+    }
+    .events-header { margin-bottom: 3.5rem; }
+    .events-list {
+      display: flex; flex-direction: column;
+      gap: 1px;
+    }
+    .event-row {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      transition: border-color var(--transition), background var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .event-row::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--gold);
+      transform: scaleY(0);
+      transition: transform var(--transition);
+    }
+    .event-row:hover { border-color: rgba(201,168,76,.3); background: rgba(255,255,255,.02); }
+    .event-row:hover::before { transform: scaleY(1); }
+    .event-date {
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .event-date .month {
+      font-size: .6rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .event-date .day {
+      font-family: var(--font-head);
+      font-size: 2.5rem;
+      line-height: 1;
+      color: var(--text);
+    }
+    .event-date .year {
+      font-size: .6rem; color: var(--muted);
+      letter-spacing: .1em;
+    }
+    .event-details .event-name {
+      font-weight: 700; font-size: 1rem;
+      margin-bottom: .3rem;
+    }
+    .event-details .event-venue {
+      font-size: .8rem; color: var(--muted);
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .event-details .event-venue svg { width: 12px; height: 12px; color: var(--gold); }
+    .event-type { font-size: .6rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+    .event-type.headliner { color: var(--gold); }
+    .event-type.supporting { color: var(--muted); }
+    .event-cta {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: var(--gold);
+      color: var(--black);
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .65rem 1.4rem; border-radius: 2px;
+      border: none; cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .event-cta:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .events-empty {
+      text-align: center; padding: 3rem;
+      color: var(--muted); font-size: .85rem; letter-spacing: .1em;
+    }
+    .events-empty strong { display: block; font-family: var(--font-head); font-size: 2rem; color: var(--gold); margin-bottom: .5rem; }
+    @media (max-width: 640px) {
+      .event-row { grid-template-columns: 60px 1fr; }
+      .event-cta { display: none; }
+    }
+
+    /* ─── Marquee ──────────────────────────────────────────── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--dark);
+      padding: 1rem 0;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 2rem;
+      white-space: nowrap;
+      display: flex; align-items: center; gap: 2rem;
+    }
+    .marquee-item span { color: var(--gold); }
+    .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─── Newsletter / CTA Banner ──────────────────────────── */
+    #connect {
+      background: linear-gradient(135deg, #0d0b06 0%, #1a1208 50%, #0d0b06 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: clamp(4rem, 8vw, 7rem) 0;
+    }
+    #connect .section-title { margin: .75rem 0 1.25rem; }
+    #connect p { color: var(--muted); font-size: .95rem; line-height: 1.8; max-width: 500px; margin: 0 auto 2.5rem; }
+    .connect-form {
+      display: flex; gap: .75rem;
+      max-width: 440px; margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .connect-form input {
+      flex: 1 1 220px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: .85rem 1.25rem;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: .85rem;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .connect-form input::placeholder { color: var(--muted); }
+    .connect-form input:focus { border-color: var(--gold); }
+    .connect-form button {
+      flex-shrink: 0;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .85rem 1.75rem;
+      border-radius: 2px;
+      border: none; cursor: pointer;
+      transition: background var(--transition);
+    }
+    .connect-form button:hover { background: var(--gold-lt); }
+
+    /* ─── Footer ───────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0 2rem;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .footer-logo {
+      font-family: var(--font-head);
+      font-size: 2.5rem;
+      letter-spacing: .12em;
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline {
+      font-size: .7rem; color: var(--muted);
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-top: .4rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .footer-col h4 {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+    .footer-col ul a {
+      font-size: .8rem; color: var(--muted);
+      transition: color var(--transition);
+    }
+    .footer-col ul a:hover { color: var(--text); }
+    .footer-social {
+      display: flex; gap: 1rem; margin-top: 1.5rem;
+    }
+    .social-btn {
+      width: 38px; height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+      font-size: .85rem;
+    }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,.08); }
+    .footer-bottom {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: .7rem;
+      color: var(--muted);
+      letter-spacing: .05em;
+    }
+
+    /* ─── Lightbox ─────────────────────────────────────────── */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.95);
+      z-index: 200;
+      align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90vw; max-height: 90vh;
+      border-radius: var(--radius);
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      width: 44px; height: 44px;
+      border-radius: 50%; border: 1px solid var(--border);
+      background: rgba(0,0,0,.8);
+      color: var(--text);
+      font-size: 1.4rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color var(--transition);
+    }
+    .lightbox-close:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ─── Reveal animations ────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">GAITTA</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#music">Music</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#connect" class="nav-cta">Stay Connected</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileClose">&#215;</button>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#music" class="mobile-link">Music</a>
+  <a href="#videos" class="mobile-link">Videos</a>
+  <a href="#events" class="mobile-link">Events</a>
+  <a href="#connect" class="mobile-link" style="color:var(--gold)">Stay Connected</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-left">
+    <p class="hero-eyebrow">Oakland, California &bull; Hip-Hop / Rap</p>
+    <h1 class="hero-name">GAI<span>T</span>TA</h1>
+    <p class="hero-location">&#9679; Allizm &nbsp;|&nbsp; EST. Oakland, CA</p>
+    <p class="hero-desc">
+      Authentic street narratives, Bay Area grit, and a catalog that spans the length of a career.
+      Gaitta delivers the real with bars that hit harder than the strip.
+    </p>
+    <div class="hero-actions">
+      <a href="#music" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Stream Now
+      </a>
+      <a href="#events" class="btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Upcoming Shows
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Years Active</div>
+      </div>
+      <div>
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Tracks</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Projects</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <img src="img/g1.jpg" alt="Gaitta" class="hero-img-main" />
+    <div class="hero-img-overlay"></div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MARQUEE
+═══════════════════════════════════════════════════════════ -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <!-- JS duplicates this for infinite loop -->
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════════════════════ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img src="img/g2.jpg" alt="Gaitta performing" class="about-img" />
+        <div class="about-img-badge">
+          <strong>OAK</strong>LAND<br/>CA
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="section-label reveal reveal-delay-1">The Story</p>
+        <h2 class="section-title reveal reveal-delay-1">Real Ones<br/>Know<br/><span class="gold">The Name.</span></h2>
+        <div class="divider reveal reveal-delay-2"></div>
+        <p class="reveal reveal-delay-2">
+          Gaitta is an Oakland-bred rapper whose sound is rooted in the raw, unfiltered energy of the Bay Area.
+          From early collaborations with regional legends to commanding full projects under his Allizm imprint,
+          Gaitta has built a reputation on honesty, craft, and consistency.
+        </p>
+        <p class="reveal reveal-delay-3">
+          His catalog spans over a decade and a half — from street anthems to introspective cuts — cementing
+          his place as one of Oakland's most authentic voices. With projects like
+          <em>Martin Luther Lean</em>, <em>The Gold Standard</em>, and <em>The 5 Deadly Venoms EP</em>,
+          the music speaks for itself.
+        </p>
+        <div class="hero-actions" style="margin-top:2rem">
+          <a href="https://music.apple.com/us/artist/gaitta/200728658" target="_blank" class="btn-primary">
+            Listen on Apple Music
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MUSIC — iTunes API
+═══════════════════════════════════════════════════════════ -->
+<section id="music" class="section">
+  <div class="container">
+    <div class="music-header">
+      <div>
+        <p class="section-label reveal">Discography</p>
+        <h2 class="section-title reveal reveal-delay-1">The<br/><span class="gold">Catalog.</span></h2>
+      </div>
+      <a href="https://music.apple.com/us/artist/gaitta/200728658" target="_blank" class="apple-link reveal reveal-delay-2">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        View on Apple Music
+      </a>
+    </div>
+
+    <div id="musicGrid" class="music-grid">
+      <div class="music-loading">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <span>Loading catalog...</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     GALLERY
+═══════════════════════════════════════════════════════════ -->
+<section id="gallery" class="section" style="padding-bottom:0">
+  <div class="container">
+    <p class="section-label reveal">Gallery</p>
+    <h2 class="section-title reveal reveal-delay-1">Through<br/><span class="gold">The Lens.</span></h2>
+  </div>
+  <div class="gallery-grid" style="margin-top:3rem">
+    <div class="gallery-item" data-src="img/g1.jpg">
+      <img src="img/g1.jpg" alt="Gaitta photo 1" loading="lazy" />
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" data-src="img/g2.jpg">
+      <img src="img/g2.jpg" alt="Gaitta photo 2" loading="lazy" />
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" data-src="img/g3.jpg">
+      <img src="img/g3.jpg" alt="Gaitta photo 3" loading="lazy" />
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" data-src="img/g4.jpg">
+      <img src="img/g4.jpg" alt="Gaitta photo 4" loading="lazy" />
+      <div class="gallery-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     VIDEOS
+═══════════════════════════════════════════════════════════ -->
+<section id="videos" class="section">
+  <div class="container">
+    <div class="videos-header">
+      <p class="section-label reveal">Visual Content</p>
+      <h2 class="section-title reveal reveal-delay-1">Watch<br/><span class="gold">The Visuals.</span></h2>
+      <div class="divider reveal reveal-delay-2"></div>
+    </div>
+
+    <div class="videos-grid">
+
+      <!-- VIDEO CARD 1 — Replace VIDEO_ID_1 with actual YouTube ID -->
+      <div class="video-card reveal">
+        <div class="video-embed">
+          <!-- To embed: replace src with https://www.youtube.com/embed/YOUR_VIDEO_ID -->
+          <div class="video-embed-placeholder" onclick="openYT('https://www.youtube.com/results?search_query=Gaitta+Oakland+rapper')">
+            <svg class="yt-icon" viewBox="0 0 68 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M66.5 7.75C65.7 4.9 63.5 2.7 60.65 1.9 55.3 0.4 34 0.4 34 0.4s-21.3 0-26.65 1.5C4.5 2.7 2.3 4.9 1.5 7.75 0 13.1 0 24 0 24s0 10.9 1.5 16.25c.8 2.85 3 5.05 5.85 5.85C12.7 47.6 34 47.6 34 47.6s21.3 0 26.65-1.5c2.85-.8 5.05-3 5.85-5.85C68 34.9 68 24 68 24s0-10.9-1.5-16.25z" fill="#FF0000"/>
+              <path d="M27.2 34.1L44.9 24 27.2 13.9v20.2z" fill="white"/>
+            </svg>
+            <p>Watch on YouTube</p>
+          </div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Latest Visuals</div>
+          <div class="video-sub">Gaitta &bull; Official Music Video</div>
+          <a href="https://www.youtube.com/results?search_query=Gaitta+Oakland+rapper" target="_blank" class="video-yt-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#ff0000"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+            Watch on YouTube
+          </a>
+        </div>
+      </div>
+
+      <!-- VIDEO CARD 2 — Replace with actual video -->
+      <div class="video-card reveal reveal-delay-1">
+        <div class="video-embed">
+          <div class="video-embed-placeholder" onclick="openYT('https://www.youtube.com/results?search_query=Gaitta+Martin+Luther+Lean')">
+            <svg class="yt-icon" viewBox="0 0 68 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M66.5 7.75C65.7 4.9 63.5 2.7 60.65 1.9 55.3 0.4 34 0.4 34 0.4s-21.3 0-26.65 1.5C4.5 2.7 2.3 4.9 1.5 7.75 0 13.1 0 24 0 24s0 10.9 1.5 16.25c.8 2.85 3 5.05 5.85 5.85C12.7 47.6 34 47.6 34 47.6s21.3 0 26.65-1.5c2.85-.8 5.05-3 5.85-5.85C68 34.9 68 24 68 24s0-10.9-1.5-16.25z" fill="#FF0000"/>
+              <path d="M27.2 34.1L44.9 24 27.2 13.9v20.2z" fill="white"/>
+            </svg>
+            <p>Martin Luther Lean</p>
+          </div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Martin Luther Lean</div>
+          <div class="video-sub">Gaitta &bull; Album Visual</div>
+          <a href="https://www.youtube.com/results?search_query=Gaitta+Martin+Luther+Lean" target="_blank" class="video-yt-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#ff0000"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+            Watch on YouTube
+          </a>
+        </div>
+      </div>
+
+      <!-- VIDEO CARD 3 — Replace with actual video -->
+      <div class="video-card reveal reveal-delay-2">
+        <div class="video-embed">
+          <div class="video-embed-placeholder" onclick="openYT('https://www.youtube.com/results?search_query=Gaitta+Gold+Standard+Oakland')">
+            <svg class="yt-icon" viewBox="0 0 68 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M66.5 7.75C65.7 4.9 63.5 2.7 60.65 1.9 55.3 0.4 34 0.4 34 0.4s-21.3 0-26.65 1.5C4.5 2.7 2.3 4.9 1.5 7.75 0 13.1 0 24 0 24s0 10.9 1.5 16.25c.8 2.85 3 5.05 5.85 5.85C12.7 47.6 34 47.6 34 47.6s21.3 0 26.65-1.5c2.85-.8 5.05-3 5.85-5.85C68 34.9 68 24 68 24s0-10.9-1.5-16.25z" fill="#FF0000"/>
+              <path d="M27.2 34.1L44.9 24 27.2 13.9v20.2z" fill="white"/>
+            </svg>
+            <p>The Gold Standard</p>
+          </div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">The Gold Standard</div>
+          <div class="video-sub">Gaitta &bull; Official Video</div>
+          <a href="https://www.youtube.com/results?search_query=Gaitta+Gold+Standard+Oakland" target="_blank" class="video-yt-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#ff0000"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+            Watch on YouTube
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     EVENTS
+═══════════════════════════════════════════════════════════ -->
+<section id="events" class="section">
+  <div class="container">
+    <div class="events-header">
+      <p class="section-label reveal">Live Shows</p>
+      <h2 class="section-title reveal reveal-delay-1">Upcoming<br/><span class="gold">Events.</span></h2>
+      <div class="divider reveal reveal-delay-2"></div>
+    </div>
+
+    <div class="events-list" id="eventsList">
+      <!-- Events injected by JS — edit the EVENTS array in the script below -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CONNECT / NEWSLETTER
+═══════════════════════════════════════════════════════════ -->
+<section id="connect">
+  <div class="container">
+    <span class="tag">Stay in the loop</span>
+    <h2 class="section-title" style="margin:.75rem 0 1.25rem">Don't Miss<br/><span class="gold">A Move.</span></h2>
+    <p>Drop your email and be the first to know about new music, videos, and Bay Area shows. No spam — just real updates.</p>
+    <form class="connect-form" id="connectForm" onsubmit="handleSubscribe(event)">
+      <input type="email" id="emailInput" placeholder="your@email.com" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">G<span>.</span>AITTA</div>
+        <div class="footer-tagline">Oakland, CA &bull; Allizm</div>
+        <div class="footer-social">
+          <!-- Apple Music -->
+          <a href="https://music.apple.com/us/artist/gaitta/200728658" target="_blank" class="social-btn" title="Apple Music" aria-label="Apple Music">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          </a>
+          <!-- YouTube placeholder -->
+          <a href="https://www.youtube.com/results?search_query=Gaitta+Oakland" target="_blank" class="social-btn" title="YouTube" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+          </a>
+          <!-- Instagram placeholder -->
+          <a href="#" class="social-btn" title="Instagram" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Music</h4>
+          <ul>
+            <li><a href="https://music.apple.com/us/artist/gaitta/200728658" target="_blank">Apple Music</a></li>
+            <li><a href="#music">Catalog</a></li>
+            <li><a href="#music">Latest Releases</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#videos">Videos</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#connect">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Label</h4>
+          <ul>
+            <li><a href="#">Allizm</a></li>
+            <li><a href="mailto:booking@allizm.com">Booking</a></li>
+            <li><a href="mailto:press@allizm.com">Press</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Gaitta / Allizm. All rights reserved.</span>
+      <span>Oakland, California</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&#215;</button>
+  <img src="" alt="" id="lightboxImg" />
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════════════════ -->
+<script>
+  /* ── Year ─────────────────────────────────────────────────── */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ── Nav scroll effect ────────────────────────────────────── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* ── Mobile nav ───────────────────────────────────────────── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileClose = document.getElementById('mobileClose');
+  hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+  mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+
+  /* ── Marquee ──────────────────────────────────────────────── */
+  const marqueeItems = [
+    'Gaitta', 'Oakland', 'Hip-Hop', 'Allizm', 'Martin Luther Lean',
+    'The Gold Standard', '5 Deadly Venoms', 'Bay Area', 'Real Music', 'No Cap'
+  ];
+  function buildMarquee() {
+    const track = document.getElementById('marqueeTrack');
+    const doubled = [...marqueeItems, ...marqueeItems];
+    track.innerHTML = doubled.map(t => `
+      <span class="marquee-item">
+        <span class="marquee-dot"></span>
+        ${t.includes('Gaitta') || t.includes('Oakland') || t.includes('Allizm') ? `<span>${t}</span>` : t}
+      </span>`).join('');
+  }
+  buildMarquee();
+
+  /* ── Reveal on scroll ─────────────────────────────────────── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  /* ── Lightbox ─────────────────────────────────────────────── */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+      lightboxImg.src = item.dataset.src;
+      lightbox.classList.add('open');
+    });
+  });
+  document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+
+  /* ── YouTube opener ───────────────────────────────────────── */
+  function openYT(url) { window.open(url, '_blank'); }
+
+  /* ── Subscribe ────────────────────────────────────────────── */
+  function handleSubscribe(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const input = document.getElementById('emailInput');
+    btn.textContent = 'You\'re In!';
+    btn.style.background = '#2ecc71';
+    input.value = '';
+    setTimeout(() => {
+      btn.textContent = 'Subscribe';
+      btn.style.background = '';
+    }, 3000);
+  }
+
+  /* ── Events data ──────────────────────────────────────────── */
+  /* !! UPDATE THIS ARRAY with real show info !! */
+  const EVENTS = [
+    // {
+    //   month: 'MAR', day: '15', year: '2026',
+    //   name: 'Show Name', venue: 'Venue Name — Oakland, CA',
+    //   type: 'HEADLINER', ticketUrl: 'https://...'
+    // }
+  ];
+
+  function renderEvents() {
+    const list = document.getElementById('eventsList');
+    if (!EVENTS.length) {
+      list.innerHTML = `
+        <div class="events-empty">
+          <strong>More Dates Coming</strong>
+          Subscribe above to be notified when new shows drop.
+        </div>`;
+      return;
+    }
+    list.innerHTML = EVENTS.map(ev => `
+      <div class="event-row reveal">
+        <div class="event-date">
+          <div class="month">${ev.month}</div>
+          <div class="day">${ev.day}</div>
+          <div class="year">${ev.year}</div>
+        </div>
+        <div class="event-details">
+          <div class="event-name">${ev.name}</div>
+          <div class="event-venue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${ev.venue}
+          </div>
+          <span class="event-type ${ev.type.toLowerCase()}">${ev.type}</span>
+        </div>
+        <a href="${ev.ticketUrl}" target="_blank" class="event-cta">
+          Get Tickets
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>`).join('');
+    // re-observe new reveal elements
+    list.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+  }
+  renderEvents();
+
+  /* ── iTunes API — Music Catalog ──────────────────────────── */
+  const ARTIST_ID = 200728658;
+  const APPLE_ARTIST_URL = 'https://music.apple.com/us/artist/gaitta/200728658';
+
+  // Format milliseconds to m:ss
+  function fmtTime(ms) {
+    const s = Math.floor(ms / 1000);
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  }
+
+  // Format artwork URL to larger size
+  function bigArt(url) {
+    return url ? url.replace('100x100bb', '400x400bb') : '';
+  }
+
+  // Global audio state
+  let currentAudio = null;
+  let currentBtn = null;
+  let currentBar = null;
+
+  function stopCurrent() {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
+    if (currentBtn) {
+      currentBtn.classList.remove('playing');
+    }
+    if (currentBar) {
+      currentBar.style.width = '0%';
+      currentBar.parentElement.classList.remove('visible');
+    }
+    currentAudio = null; currentBtn = null; currentBar = null;
+  }
+
+  function togglePreview(trackId, previewUrl, btn, progressWrap, progressFill) {
+    // If already playing this track, stop it
+    if (currentAudio && btn.classList.contains('playing')) {
+      stopCurrent();
+      return;
+    }
+    // Stop whatever is playing
+    stopCurrent();
+
+    const audio = new Audio(previewUrl);
+    currentAudio = audio;
+    currentBtn = btn;
+    currentBar = progressFill;
+
+    btn.classList.add('playing');
+    progressWrap.classList.add('visible');
+
+    audio.play().catch(() => {
+      btn.classList.remove('playing');
+      progressWrap.classList.remove('visible');
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        progressFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      }
+    });
+
+    audio.addEventListener('ended', () => {
+      stopCurrent();
+    });
+  }
+
+  function renderTrackCard(track) {
+    const art = bigArt(track.artworkUrl100);
+    const explicit = track.trackExplicitness === 'explicit';
+    const price = track.trackPrice > 0 ? `$${track.trackPrice.toFixed(2)}` : 'Free';
+    const year = track.releaseDate ? new Date(track.releaseDate).getFullYear() : '';
+    const duration = track.trackTimeMillis ? fmtTime(track.trackTimeMillis) : '';
+    const hasPreview = !!track.previewUrl;
+    const trackId = track.trackId;
+
+    return `
+    <div class="track-card reveal" data-trackid="${trackId}">
+      <div class="track-art-wrap">
+        <img class="track-art" src="${art}" alt="${track.trackName}" loading="lazy" />
+        ${explicit ? '<span class="track-explicit">EXPLICIT</span>' : ''}
+        <div class="track-art-overlay">
+          ${hasPreview ? `
+          <button class="play-btn" onclick="handlePlay(${trackId}, '${track.previewUrl}', this)" aria-label="Preview ${track.trackName}">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>` : ''}
+        </div>
+      </div>
+      <div class="track-info">
+        <div class="track-name" title="${track.trackName}">${track.trackName}</div>
+        <div class="track-meta">
+          <span>${track.collectionName || ''}</span>
+          <span class="track-year">${year}</span>
+        </div>
+        <div class="track-progress" id="prog-wrap-${trackId}">
+          <div class="track-progress-fill" id="prog-fill-${trackId}"></div>
+        </div>
+        <div class="track-actions">
+          ${hasPreview ? `
+          <button class="track-btn track-btn-preview" onclick="handlePlay(${trackId}, '${track.previewUrl}', null)" id="prev-btn-${trackId}">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Preview
+          </button>` : ''}
+          <a href="${track.trackViewUrl}" target="_blank" class="track-btn track-btn-buy">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Buy ${price}
+          </a>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Unified play handler — resolves btn from card or standalone button
+  window.handlePlay = function(trackId, previewUrl, btn) {
+    // If btn is null (called from track-btn-preview), find the overlay btn
+    const overlayBtn = btn || document.querySelector(`[data-trackid="${trackId}"] .play-btn`);
+    const progressWrap = document.getElementById(`prog-wrap-${trackId}`);
+    const progressFill = document.getElementById(`prog-fill-${trackId}`);
+    if (progressWrap && progressFill) {
+      togglePreview(trackId, previewUrl, overlayBtn || btn, progressWrap, progressFill);
+    }
+  };
+
+  async function loadMusic() {
+    const grid = document.getElementById('musicGrid');
+    try {
+      // Use a CORS proxy approach — iTunes API supports JSONP cross-origin
+      const res = await fetch(
+        `https://itunes.apple.com/lookup?id=${ARTIST_ID}&entity=song&limit=50&country=US`
+      );
+      const data = await res.json();
+
+      // Filter to tracks where Gaitta is primary artist
+      const tracks = data.results.filter(r =>
+        r.wrapperType === 'track' &&
+        r.kind === 'song' &&
+        r.artistId === ARTIST_ID
+      );
+
+      // Sort newest first
+      tracks.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+
+      if (!tracks.length) {
+        grid.innerHTML = `<p style="color:var(--muted);padding:2rem">No tracks found. <a href="${APPLE_ARTIST_URL}" target="_blank" style="color:var(--gold)">View on Apple Music</a></p>`;
+        return;
+      }
+
+      grid.innerHTML = tracks.map(renderTrackCard).join('');
+
+      // Observe new reveal elements
+      grid.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    } catch (err) {
+      console.error('iTunes API error:', err);
+      // Fallback to hardcoded featured releases
+      grid.innerHTML = buildFallback();
+      grid.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    }
+  }
+
+  // Fallback hardcoded tracks (from our API research) if fetch fails (CORS, network, etc.)
+  function buildFallback() {
+    const fallbackTracks = [
+      {
+        trackId: 1838884360, trackName: "Kyrie 11's", artistId: 200728658,
+        collectionName: "Kyrie 11's - Single", releaseDate: "2025-09-08T07:00:00Z",
+        trackPrice: 0.99, trackExplicitness: 'explicit',
+        artworkUrl100: 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f7/ea/36/f7ea367d-65d0-e094-87ab-57585ebc36bc/artwork.jpg/100x100bb.jpg',
+        trackViewUrl: 'https://music.apple.com/us/album/kyrie-11s-single/1838884359',
+        previewUrl: null, trackTimeMillis: 0
+      },
+      {
+        trackId: 1815225308, trackName: "Oasis", artistId: 200728658,
+        collectionName: "Oasis - Single", releaseDate: "2025-05-18T07:00:00Z",
+        trackPrice: 0.99, trackExplicitness: 'explicit',
+        artworkUrl100: 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a1/88/cd/a188cd61-1673-5e2e-6c72-b943fd26a8cc/artwork.jpg/100x100bb.jpg',
+        trackViewUrl: 'https://music.apple.com/us/album/oasis-single/1815225307',
+        previewUrl: null, trackTimeMillis: 0
+      },
+      {
+        trackId: 1812705379, trackName: "Playa", artistId: 200728658,
+        collectionName: "Playa - Single", releaseDate: "2025-05-05T07:00:00Z",
+        trackPrice: 0.99, trackExplicitness: 'explicit',
+        artworkUrl100: 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9c/f6/7e/9cf67e44-7bda-654a-0264-30dcffe038b0/artwork.jpg/100x100bb.jpg',
+        trackViewUrl: 'https://music.apple.com/us/album/playa-single/1812705378',
+        previewUrl: null, trackTimeMillis: 0
+      },
+      {
+        trackId: 1763149908, trackName: "Room Temp", artistId: 200728658,
+        collectionName: "Room Temp - Single", releaseDate: "2024-08-13T07:00:00Z",
+        trackPrice: 0.99, trackExplicitness: 'explicit',
+        artworkUrl100: 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/86/ec/00/86ec00c6-c96b-2237-c15a-db0d98b1588f/artwork.jpg/100x100bb.jpg',
+        trackViewUrl: 'https://music.apple.com/us/album/room-temp-single/1763149907',
+        previewUrl: null, trackTimeMillis: 0
+      },
+      {
+        trackId: 1699931910, trackName: "Fast", artistId: 200728658,
+        collectionName: "Fast - Single", releaseDate: "2023-07-29T12:00:00Z",
+        trackPrice: 0.99, trackExplicitness: 'explicit',
+        artworkUrl100: 'https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/09/70/0e/09700e3a-f265-ea85-1cfa-c9b58cb76d2c/artwork.jpg/100x100bb.jpg',
+        trackViewUrl: 'https://music.apple.com/us/album/fast/1699931909?i=1699931910',
+        previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/28/07/ee/2807eecc-d40f-a34c-d12f-53bee915eeea/mzaf_13935582782384718727.plus.aac.p.m4a',
+        trackTimeMillis: 149368
+      },
+      {
+        trackId: 1677652624, trackName: "Nu Bih", artistId: 200728658,
+        collectionName: "Nu Bih - Single", releaseDate: "2023-03-16T07:00:00Z",
+        trackPrice: 0.99, trackExplicitness: 'explicit',
+        artworkUrl100: 'https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/c7/bf/ad/c7bfadfc-ab9d-d6e2-2b5a-f48ea5f62855/artwork.jpg/100x100bb.jpg',
+        trackViewUrl: 'https://music.apple.com/us/album/nu-bih-single/1677652623',
+        previewUrl: null, trackTimeMillis: 0
+      },
+    ];
+    return fallbackTracks.map(renderTrackCard).join('');
+  }
+
+  loadMusic();
+</script>
+
+</body>
+</html>
